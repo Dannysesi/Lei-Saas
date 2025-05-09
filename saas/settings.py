@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import environ
 import os
+import dj_database_url
 
 # Initialize environment variables
 env = environ.Env(
@@ -36,7 +37,11 @@ SECRET_KEY = 'django-insecure-@+(n%bb*#@ie9h(m-vx()lq+r!lc+mdz!4lrv!qjlfxb7^!_(&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'lei-saas.onrender.com',
+    '.lei-saas.onrender.com',  # for subdomains
+    'localhost',  # optional for local dev
+]
 
 
 # Application definition
@@ -87,7 +92,7 @@ ROOT_URLCONF = 'saas.urls'
 
 ROOT_HOSTCONF = 'saas.hosts'
 DEFAULT_HOST = 'www'
-PARENT_HOST = 'localhost'
+# PARENT_HOST = 'lei-saas'
 PUBLIC_SCHEMA_NAME = 'public'
 
 TEMPLATES = [
@@ -115,15 +120,35 @@ WSGI_APPLICATION = 'saas.wsgi.application'
 
 DATABASE_ROUTERS = ('django_tenants.routers.TenantSyncRouter',)
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django_tenants.postgresql_backend',
+#         'NAME': env('DB_NAME'),
+#         'USER': env('DB_USER'),
+#         'PASSWORD': env('DB_PASSWORD'),
+#         'HOST': env('DB_HOST'),
+#         'PORT': env('DB_PORT'),
+#     }
+# }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django_tenants.postgresql_backend',  # <-- Important
+#         'NAME': 'saas2',
+#         'USER': 'saas2_user',
+#         'PASSWORD': 'pInNWQ8gdTyxu9xz3gV4t2sBRqoK7Zbg',
+#         'HOST': 'dpg-d0f52924d50c739tvbi0-a.oregon-postgres.render.com',
+#         'PORT': '5432',
+#     }
+# }
+
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django_tenants.postgresql_backend',
-        'NAME': env('DB_NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASSWORD'),
-        'HOST': env('DB_HOST'),
-        'PORT': env('DB_PORT'),
-    }
+    'default': dj_database_url.parse(
+        os.getenv('DATABASE_URL'),
+        engine='django_tenants.postgresql_backend',  # for django-tenants
+    )
 }
 
 
@@ -179,5 +204,10 @@ EMAIL_BACKEND = env('EMAIL_BACKEND')
 EMAIL_HOST = env('EMAIL_HOST')
 EMAIL_PORT = env.int('EMAIL_PORT')
 
-BASE_DOMAIN = env('BASE_DOMAIN')
+# BASE_DOMAIN = 'lei-saas'
 GRACE_PERIOD_DAYS = env.int('GRACE_PERIOD_DAYS')
+
+
+PARENT_HOST = 'lei-saas.onrender.com'
+BASE_DOMAIN = 'lei-saas.onrender.com'
+BASE_URL = 'https://lei-saas.onrender.com'
