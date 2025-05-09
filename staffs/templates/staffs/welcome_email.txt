@@ -1,0 +1,14 @@
+Hello {{ user.get_full_name|default:user.username }},
+
+Your tenant admin account has been created successfully.
+
+Login URL: {{ login_url }}
+Email: {{ email }}
+Password: {{ password }}
+
+For security reasons, you'll be required to change your password on first login.
+
+If you have any questions, please contact us at {{ support_email }}.
+
+Best regards,
+The Platform Team

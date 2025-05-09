@@ -1,0 +1,175 @@
+{% extends "tenant_base.html" %}
+
+{% block page_title %}
+    {% if object %}Edit {{ object.get_full_name }}{% else %}Create New User{% endif %}
+{% endblock %}
+
+{% block tenant_content %}
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">
+            <i class="fas fa-user-edit mr-2"></i>
+            {% if object %}Edit User{% else %}Create New User{% endif %}
+        </h2>
+    </div>
+    
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            
+            {% if form.non_field_errors %}
+            <div class="alert alert-error mb-4">
+                <i class="fas fa-exclamation-circle mr-2"></i>
+                {{ form.non_field_errors|join:", " }}
+            </div>
+            {% endif %}
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Personal Info -->
+                <div class="form-group">
+                    <label for="{{ form.first_name.id_for_label }}">First Name</label>
+                    {{ form.first_name }}
+                    {% if form.first_name.errors %}
+                    <div class="form-error">{{ form.first_name.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.last_name.id_for_label }}">Last Name</label>
+                    {{ form.last_name }}
+                    {% if form.last_name.errors %}
+                    <div class="form-error">{{ form.last_name.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.email.id_for_label }}">Email</label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                    <div class="form-error">{{ form.email.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.phone_number.id_for_label }}">Phone</label>
+                    {{ form.phone_number }}
+                    {% if form.phone_number.errors %}
+                    <div class="form-error">{{ form.phone_number.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <!-- Work Info -->
+                <div class="form-group">
+                    <label for="{{ form.department.id_for_label }}">Department</label>
+                    {{ form.department }}
+                    {% if form.department.errors %}
+                    <div class="form-error">{{ form.department.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.position.id_for_label }}">Position</label>
+                    {{ form.position }}
+                    {% if form.position.errors %}
+                    <div class="form-error">{{ form.position.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <!-- Permissions -->
+                <div class="form-group">
+                    <label for="{{ form.is_active.id_for_label }}" class="checkbox-label">
+                        {{ form.is_active }}
+                        <span>Active Status</span>
+                    </label>
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.is_tenant_admin.id_for_label }}" class="checkbox-label">
+                        {{ form.is_tenant_admin }}
+                        <span>Tenant Admin</span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="form-actions mt-6">
+                <a href="{% if object %}{% url 'user_detail' object.pk %}{% else %}{% url 'user_list' %}{% endif %}" 
+                   class="btn btn-secondary">
+                    <i class="fas fa-times mr-2"></i> Cancel
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save mr-2"></i> Save Changes
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .form-group {
+        margin-bottom: 1.25rem;
+    }
+    
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--dark);
+    }
+    
+    input:not([type="checkbox"]), 
+    select {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-family: inherit;
+    }
+    
+    input:focus, select:focus {
+        outline: none;
+        border-color: var(--secondary);
+        box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+    }
+    
+    .checkbox-label {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        cursor: pointer;
+    }
+    
+    .checkbox-label input[type="checkbox"] {
+        width: auto;
+    }
+    
+    .form-error {
+        color: var(--accent);
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+    
+    .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #eee;
+    }
+    
+    .grid {
+        display: grid;
+    }
+    
+    .grid-cols-1 {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    
+    .grid-cols-2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .gap-6 {
+        gap: 1.5rem;
+    }
+</style>
+{% endblock %}

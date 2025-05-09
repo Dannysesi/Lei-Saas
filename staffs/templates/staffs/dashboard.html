@@ -1,0 +1,159 @@
+{% extends "tenant_base.html" %}
+
+{% block page_title %}Dashboard{% endblock %}
+
+{% block tenant_content %}
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-subtitle">
+                <i class="fas fa-user-clock mr-2"></i>Time Tracking
+            </h3>
+        </div>
+        <div class="card-body">
+            <div class="text-3xl font-bold mb-2">142</div>
+            <p class="text-gray-600">Pending approvals</p>
+            <a href="#" class="btn btn-sm btn-outline mt-4">View All</a>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-subtitle">
+                <i class="fas fa-file-invoice mr-2"></i>Payroll
+            </h3>
+        </div>
+        <div class="card-body">
+            <div class="text-3xl font-bold mb-2">$24,580</div>
+            <p class="text-gray-600">Next payroll amount</p>
+            <a href="#" class="btn btn-sm btn-outline mt-4">Process Payroll</a>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-subtitle">
+                <i class="fas fa-users mr-2"></i>Employees
+            </h3>
+        </div>
+        <div class="card-body">
+            <div class="text-3xl font-bold mb-2">87</div>
+            <p class="text-gray-600">Active employees</p>
+            <a href="#" class="btn btn-sm btn-outline mt-4">Manage Employees</a>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-8">
+    <div class="card-header">
+        <h3 class="card-subtitle">
+            <i class="fas fa-bell mr-2"></i>Recent Activities
+        </h3>
+    </div>
+    <div class="card-body">
+        <div class="space-y-4">
+            <div class="flex items-start gap-3">
+                <div class="bg-blue-100 text-blue-600 p-2 rounded-full">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+                <div>
+                    <p class="font-medium">New employee onboarded</p>
+                    <p class="text-sm text-gray-600">Sarah Johnson was added to the system</p>
+                    <p class="text-xs text-gray-500 mt-1">2 hours ago</p>
+                </div>
+            </div>
+            
+            <div class="flex items-start gap-3">
+                <div class="bg-green-100 text-green-600 p-2 rounded-full">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                </div>
+                <div>
+                    <p class="font-medium">Payroll processed</p>
+                    <p class="text-sm text-gray-600">Payroll for period ending 15/06/2023 was completed</p>
+                    <p class="text-xs text-gray-500 mt-1">1 day ago</p>
+                </div>
+            </div>
+            
+            <div class="flex items-start gap-3">
+                <div class="bg-purple-100 text-purple-600 p-2 rounded-full">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div>
+                    <p class="font-medium">Timesheet approved</p>
+                    <p class="text-sm text-gray-600">Michael Chen's timesheet was approved</p>
+                    <p class="text-xs text-gray-500 mt-1">2 days ago</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-subtitle">
+            <i class="fas fa-tasks mr-2"></i>Quick Actions
+        </h3>
+    </div>
+    <div class="card-body">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <a href="#" class="quick-action-card">
+                <div class="quick-action-icon bg-blue-100 text-blue-600">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+                <span>Add Employee</span>
+            </a>
+            
+            <a href="#" class="quick-action-card">
+                <div class="quick-action-icon bg-green-100 text-green-600">
+                    <i class="fas fa-file-import"></i>
+                </div>
+                <span>Import Data</span>
+            </a>
+            
+            <a href="#" class="quick-action-card">
+                <div class="quick-action-icon bg-purple-100 text-purple-600">
+                    <i class="fas fa-file-export"></i>
+                </div>
+                <span>Export Reports</span>
+            </a>
+            
+            <a href="#" class="quick-action-card">
+                <div class="quick-action-icon bg-yellow-100 text-yellow-600">
+                    <i class="fas fa-cog"></i>
+                </div>
+                <span>Settings</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .quick-action-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1.5rem 1rem;
+        border-radius: 8px;
+        text-align: center;
+        text-decoration: none;
+        color: var(--dark);
+        transition: all 0.3s ease;
+    }
+    
+    .quick-action-card:hover {
+        background-color: var(--light);
+        transform: translateY(-2px);
+    }
+    
+    .quick-action-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        margin-bottom: 0.75rem;
+    }
+</style>
+{% endblock %}

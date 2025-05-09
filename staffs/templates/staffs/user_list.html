@@ -1,0 +1,150 @@
+{% extends "tenant_base.html" %}
+
+{% block page_title %}User Management{% endblock %}
+
+{% block tenant_content %}
+<div class="card">
+    <div class="card-header flex justify-between items-center">
+        <h2 class="card-title">
+            <i class="fas fa-users mr-2"></i>Staff Users
+        </h2>
+        <a href="{% url 'user_create' %}" class="btn btn-primary">
+            <i class="fas fa-plus mr-2"></i> Add User
+        </a>
+    </div>
+    
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Position</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>
+                            <div class="flex items-center">
+                                <div class="avatar mr-3">
+                                    {{ user.get_initials }}
+                                </div>
+                                <div>
+                                    <div class="font-medium">{{ user.get_full_name }}</div>
+                                    <div class="text-sm text-gray-500">{{ user.department }}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.position }}</td>
+                        <td>
+                            <span class="badge {% if user.is_active %}badge-success{% else %}badge-danger{% endif %}">
+                                {% if user.is_active %}Active{% else %}Inactive{% endif %}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="flex gap-2">
+                                <a href="{% url 'user_detail' user.pk %}" class="btn btn-sm btn-outline" title="View">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="{% url 'user_update' user.pk %}" class="btn btn-sm btn-outline" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-4 text-gray-500">
+                            <i class="fas fa-users-slash mr-2"></i> No users found
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        {% if is_paginated %}
+        <div class="pagination mt-4">
+            <nav class="flex items-center justify-between">
+                <div class="flex gap-2">
+                    {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-sm">
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </a>
+                    {% endif %}
+                    
+                    {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" class="btn btn-sm">
+                        Next <i class="fas fa-chevron-right"></i>
+                    </a>
+                    {% endif %}
+                </div>
+                <span class="text-sm text-gray-600">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                </span>
+            </nav>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    .table th, .table td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .table th {
+        background-color: var(--light);
+        font-weight: 600;
+        color: var(--dark);
+    }
+    
+    .avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: var(--secondary);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+    }
+    
+    .badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+    
+    .badge-success {
+        background-color: #d1fae5;
+        color: #065f46;
+    }
+    
+    .badge-danger {
+        background-color: #fee2e2;
+        color: #b91c1c;
+    }
+    
+    .pagination {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+</style>
+{% endblock %}

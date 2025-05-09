@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Tenant Admin Account</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background-color: #f8f9fa; padding: 15px; text-align: center; }
+        .content { padding: 20px; }
+        .credentials { background-color: #f1f1f1; padding: 15px; margin: 15px 0; }
+        .footer { margin-top: 20px; font-size: 0.9em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Your Tenant Admin Account</h2>
+        </div>
+        
+        <div class="content">
+            <p>Hello {{ user.get_full_name|default:user.username }},</p>
+            
+            <p>Your tenant admin account has been created successfully.</p>
+            
+            <div class="credentials">
+                <p><strong>Username:</strong> {{ user.username }}</p>
+                <p><strong>Login URL:</strong> <a href="{{ login_url }}">{{ login_url }}</a></p>
+                <p><strong>Email:</strong> {{ email }}</p>
+                <p><strong>Password:</strong> {{ password }}</p>
+            </div>
+            
+            <p>For security reasons, you'll be required to change your password on first login.</p>
+        </div>
+        
+        <div class="footer">
+            <p>If you have any questions, please contact us at <a href="mailto:{{ support_email }}">{{ support_email }}</a>.</p>
+            <p>Best regards,<br>The Platform Team</p>
+        </div>
+    </div>
+</body>
+</html>

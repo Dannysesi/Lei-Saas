@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Our Platform</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .hero-section {
+            padding: 100px 0;
+            text-align: center;
+            background-color: #007bff;
+            color: white;
+        }
+        .cta-button {
+            background-color: #28a745;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 18px;
+            text-decoration: none;
+        }
+        .cta-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="display-4">Welcome to Our Platform!</h1>
+            <p class="lead">We help businesses manage their operations efficiently with cutting-edge technology.</p>
+            <p class="lead">Get started by creating your company profile and setting up your account.</p>
+            <a href="{% url 'company' %}" class="cta-button">Start Onboarding</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center py-4">
+        <p>&copy; 2025 Our Platform. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

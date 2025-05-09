@@ -1,0 +1,119 @@
+{% extends "tenant_base.html" %}
+
+{% block page_title %}Create New User{% endblock %}
+
+{% block tenant_content %}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Create New User</h3>
+        <span class="badge bg-{% if not user_limit_reached %}success{% else %}danger{% endif %} float-end">
+            Users: {{ current_users }} / {{ max_users }}
+        </span>
+        {% if user_limit_reached %}
+        <span class="text-danger">(Limit Reached)</span>
+        {% endif %}
+    </div>
+</div>
+
+{% if user_limit_reached %}
+<div class="alert alert-danger">
+    <i class="fas fa-ban"></i> 
+    {{ max_users }} user limit reached. 
+    <a href="#" class="alert-link">
+        Contact support to upgrade
+    </a>
+</div>
+{% else %}
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">
+            <i class="fas fa-user-plus mr-2"></i>
+            Create User Account
+        </h2>
+        <p class="text-muted">Step 1 of 2: Basic account information</p>
+        
+        {% if tenant_plan %}
+        <div class="plan-info mt-2">
+            <small class="text-muted">
+                <i class="fas fa-tag"></i> {{ tenant_plan.name }} Plan
+                ({{ limits.max_users }} users max)
+            </small>
+        </div>
+        {% endif %}
+    </div>
+    
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            
+            {% if form.non_field_errors %}
+            <div class="alert alert-error mb-4">
+                <i class="fas fa-exclamation-circle mr-2"></i>
+                {{ form.non_field_errors|join:", " }}
+            </div>
+            {% endif %}
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="form-group">
+                    <label for="{{ form.username.id_for_label }}">Username</label>
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                    <div class="form-error">{{ form.username.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.first_name.id_for_label }}">First Name</label>
+                    {{ form.first_name }}
+                    {% if form.first_name.errors %}
+                    <div class="form-error">{{ form.first_name.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.last_name.id_for_label }}">Last Name</label>
+                    {{ form.last_name }}
+                    {% if form.last_name.errors %}
+                    <div class="form-error">{{ form.last_name.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.email.id_for_label }}">Email</label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                    <div class="form-error">{{ form.email.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.password1.id_for_label }}">Password</label>
+                    {{ form.password1 }}
+                    {% if form.password1.errors %}
+                    <div class="form-error">{{ form.password1.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.password2.id_for_label }}">Confirm Password</label>
+                    {{ form.password2 }}
+                    {% if form.password2.errors %}
+                    <div class="form-error">{{ form.password2.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="form-actions mt-6">
+                <a href="{% url 'user_list' %}" class="btn btn-secondary">
+                    <i class="fas fa-times mr-2"></i> Cancel
+                </a>
+                <button type="submit" class="btn btn-primary" {% if is_restricted %}disabled title="Subscription restrictions apply"{% endif %}>
+                    <i class="fas fa-arrow-right mr-2"></i> Continue to Profile Setup
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
